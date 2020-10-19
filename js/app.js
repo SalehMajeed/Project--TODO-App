@@ -1,10 +1,12 @@
 const todo_input = document.querySelector('.todo-input');
 const todo_button = document.querySelector('.todo-button');
 const todo_list = document.querySelector('.todo-list');
+const filter_option = document.querySelector('.filter-todo');
 
 // Event Listners
 todo_button.addEventListener('click', add_todo);
 todo_list.addEventListener('click', delete_check);
+filter_option.addEventListener('click', filter_todo);
 
 function add_todo(event) {
     // Prevent form from submitting
@@ -47,16 +49,52 @@ function delete_check(event) {
         const todo = item.parentElement;
 
         //Animation
-        todo.classList.add('fall')
-        todo.addEventListener('transitioned',function(){
-            todo.remove()
-        })
+        todo.classList.add('fall');
+        todo.addEventListener('transitioned', function () {
+            todo.remove();
+        });
     }
 
     //Check Mark
     if (item.classList[0] == 'complete-btn') {
         const todo = item.parentElement;
         todo.classList.toggle('completed');
-        console.log('innn',todo)
+        console.log('innn', todo);
     }
+}
+
+function filter_todo(event) {
+    const todos = todo_list.childNodes;
+    todos.forEach(function (todo) {
+        switch (event.target.value) {
+            case 'all':
+                todo.style.display = 'flex';
+                break;
+            case 'completed':
+                if (todo.classList.contains('completed')) {
+                    todo.style.display = 'flex';
+                } else {
+                    todo.style.display = 'none';
+                }
+                break;
+            case 'uncompleted':
+                if (!todo.classList.contains('completed')) {
+                    todo.style.display = 'flex';
+                } else {
+                    todo.style.display = 'none';
+                }
+                break;
+        }
+    });
+}
+
+function save_local_todo(todo) {
+    let todos;
+    if (localStorage.getItem('todos') == null) {
+        todos = [];
+    } else {
+        todos = JSON.parse(localStorage.getItem('todos'));
+    }
+    todos.push(todo);
+    localStorage.setItem('todos', JSON.stringify(todos));
 }
