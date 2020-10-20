@@ -9,9 +9,14 @@ todo_button.addEventListener('click', add_todo);
 todo_list.addEventListener('click', delete_check);
 filter_option.addEventListener('click', filter_todo);
 
+    
 function add_todo(event) {
     // Prevent form from submitting
     event.preventDefault();
+    if (!todo_input.value) {
+        alert('Enter Value');
+        return;
+    }
 
     //Todo Div
     const todo_div = document.createElement('div');
@@ -70,9 +75,9 @@ function delete_check(event) {
 
 function filter_todo(event) {
     const todos = todo_list.childNodes;
-    console.log(todos)
+    console.log(todos);
     todos.forEach(function (todo) {
-        console.log(todo)
+        console.log(todo);
         switch (event.target.value) {
             case 'all':
                 todo.style.display = 'flex';
