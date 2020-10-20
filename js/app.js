@@ -70,7 +70,9 @@ function delete_check(event) {
 
 function filter_todo(event) {
     const todos = todo_list.childNodes;
+    console.log(todos)
     todos.forEach(function (todo) {
+        console.log(todo)
         switch (event.target.value) {
             case 'all':
                 todo.style.display = 'flex';
@@ -111,7 +113,7 @@ function get_todos() {
     } else {
         todos = JSON.parse(localStorage.getItem('todos'));
     }
-    todo.forEach(function (todo) {
+    todos.forEach(function (todo) {
         //Todo Div
         const todo_div = document.createElement('div');
         todo_div.classList.add('todo');
